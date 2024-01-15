@@ -4,4 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ICategoryEntity extends CrudRepository<CategoryEntity, Integer> {
 
+    CategoryEntity findByName(String name);
+
 }

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -20,17 +21,15 @@ public class CategoryUseCaseImpl implements ICategoryUseCase {
 
     @Override
     public void createCategory(Category category) {
-
-        if (nonNull(category)) {
-
-            var request =  CategoryEntity.builder()
-                    .id(category.id())
-                    .name(category.name())
-                    .build();
-
-            categoryEntity.save(request);
-            return;
-        }
-        throw new InvalidCategoryException("Error create category.");
+        var getCategory = categoryEntity.findByName(category.name());
+        if (nonNull(category) && isNull(getCategory)) {
+            var request = CategoryEntity.builder()
+                   .id(category.id())
+                        .name(category.name())
+                        .build();
+                categoryEntity.save(request);
+                return;
+            }
+        throw new InvalidCategoryException("[ERROR] - Category already registered");
     }
 }
