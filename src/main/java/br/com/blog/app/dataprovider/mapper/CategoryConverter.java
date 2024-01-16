@@ -9,7 +9,6 @@ public class CategoryConverter {
 
     public Category toDomain(CategoryRequestDTO dto){
         return Category.builder()
-                .id(dto.id())
                 .name(dto.name())
                 .build();
     }

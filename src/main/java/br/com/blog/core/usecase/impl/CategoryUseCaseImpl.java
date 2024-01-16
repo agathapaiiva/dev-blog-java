@@ -24,12 +24,16 @@ public class CategoryUseCaseImpl implements ICategoryUseCase {
         var getCategory = categoryEntity.findByName(category.name());
         if (nonNull(category) && isNull(getCategory)) {
             var request = CategoryEntity.builder()
-                   .id(category.id())
                         .name(category.name())
                         .build();
                 categoryEntity.save(request);
                 return;
             }
         throw new InvalidCategoryException("[ERROR] - Category already registered");
+    }
+
+    @Override
+    public Iterable<CategoryEntity> findAllCategory() {
+        return categoryEntity.findAll();
     }
 }

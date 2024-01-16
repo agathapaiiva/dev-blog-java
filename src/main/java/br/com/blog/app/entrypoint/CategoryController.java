@@ -2,6 +2,7 @@ package br.com.blog.app.entrypoint;
 
 import br.com.blog.app.dataprovider.dto.CategoryRequestDTO;
 import br.com.blog.app.dataprovider.mapper.CategoryConverter;
+import br.com.blog.core.domain.repository.CategoryEntity;
 import br.com.blog.core.usecase.port.ICategoryUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,7 +27,13 @@ public class CategoryController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createCategory(
             @RequestBody CategoryRequestDTO request){
-        var entity = categoryConverter.toDomain(request);
-        categoryUseCase.createCategory(entity);
+        var response = categoryConverter.toDomain(request);
+        categoryUseCase.createCategory(response);
+    }
+
+    @GetMapping(value = "/category", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Iterable<CategoryEntity> allCategory(){
+        return categoryUseCase.findAllCategory();
     }
 }

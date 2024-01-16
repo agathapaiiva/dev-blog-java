@@ -6,5 +6,5 @@ import lombok.NonNull;
 import java.io.Serializable;
 
 @Builder
-public record CategoryRequestDTO(@NonNull String name, Integer id) implements Serializable {
+public record CategoryRequestDTO(@NonNull String name) implements Serializable {
 }
