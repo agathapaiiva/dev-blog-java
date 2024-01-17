@@ -1,6 +1,7 @@
 package br.com.blog.core.usecase.impl;
 
 import br.com.blog.core.domain.exception.InvalidCategoryException;
+import br.com.blog.core.domain.mapper.ConverterDomain;
 import br.com.blog.core.domain.model.Category;
 import br.com.blog.core.domain.repository.CategoryEntity;
 import br.com.blog.core.domain.repository.ICategoryEntity;
@@ -19,13 +20,14 @@ public class CategoryUseCaseImpl implements ICategoryUseCase {
     @Autowired
     private ICategoryEntity categoryEntity;
 
+    private final ConverterDomain converterDomain;
+
     @Override
     public void createCategory(Category category) {
         var getCategory = categoryEntity.findByName(category.name());
         if (nonNull(category) && isNull(getCategory)) {
-            var request = CategoryEntity.builder()
-                        .name(category.name())
-                        .build();
+
+            var request = converterDomain.toEntity(category);
                 categoryEntity.save(request);
                 return;
             }
