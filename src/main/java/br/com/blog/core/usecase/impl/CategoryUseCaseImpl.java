@@ -36,4 +36,14 @@ public class CategoryUseCaseImpl implements ICategoryUseCase {
     public Iterable<CategoryEntity> findAllCategory() {
         return categoryEntity.findAll();
     }
+
+    @Override
+    public void deleteByIdCategory(Integer id) {
+        var category  = categoryEntity.findById(id);
+        if(nonNull(category)){
+            categoryEntity.deleteById(id);
+            return;
+        }
+        throw new InvalidCategoryException("[ERROR] - Category not found in the database");
+    }
 }

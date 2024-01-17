@@ -8,4 +8,7 @@ public interface ICategoryUseCase {
     void createCategory(Category category);
 
     Iterable<CategoryEntity> findAllCategory();
+
+    void deleteByIdCategory(Integer id);
+
 }

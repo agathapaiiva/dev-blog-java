@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Validated
 @RestController
-@RequestMapping("/blog")
 public class CategoryController {
 
     private final ICategoryUseCase categoryUseCase;
@@ -35,5 +34,11 @@ public class CategoryController {
     @ResponseStatus(HttpStatus.OK)
     public Iterable<CategoryEntity> allCategory(){
         return categoryUseCase.findAllCategory();
+    }
+
+    @DeleteMapping(value = "/category", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteByIdCategory(@RequestParam Integer id){
+        categoryUseCase.deleteByIdCategory(id);
     }
 }
